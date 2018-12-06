@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <div>
+        <ul>
+{#        查询当前也数据#}
+            {% for cate in pagitation.items %}
+                <li>{{ cate.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <a href="{{ url_for('orm.pagination_view',page=1,size=1) }}">首页</a>
+        {% if pagitation.has_prev %}
+            <a href="{{ url_for('orm.pagination_view',page=pagitation.prev_num,size=1) }}">上一页</a>
+        {% endif %}
+{#    遍历页码#}
+        {% for num in pagitation.iter_pages(left_edge=0,left_current=left_current,right_current=right_current,right_edge=0) %}
+            {% if num %}
+                <a href="{{ url_for('orm.pagination_view',page=num,size=1) }}">{{ num }}</a>
+            {% else %}
+            {% endif %}
+
+        {% endfor %}
+        {% if pagitation.has_next %}
+            <a href="{{ url_for('orm.pagination_view',page=pagitation.page + 1,size=1) }}">下一页</a>
+        {% endif %}
+        <a href="{{ url_for('orm.pagination_view',page=pagitation.pages,size=1) }}">尾页</a>
+    </div>
+</div>
+
+</body>
+</html>
